@@ -1,0 +1,27 @@
+// Definir estilos para los elementos NavLink con la clase 'links'
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: antiquewhite;
+
+    .bag-icon {
+        width: 40px; // Tamaño deseado para el icono
+        height: auto;
+        // Otros estilos si los deseas, como color, margen, etc.
+    }
+}
+
+.links {
+    /* Puedes agregar tus estilos aquí */
+    color: red;
+    text-decoration: none;
+    margin-right: 10px;
+
+    &:hover {
+        /* Estilos cuando el mouse se encuentra sobre los elementos NavLink con la clase 'links' */
+        /* Puedes agregar tus estilos aquí */
+        text-decoration: underline;
+    }
+}
