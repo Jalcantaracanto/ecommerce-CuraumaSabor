@@ -1,10 +1,13 @@
 import React, { useContext } from 'react'
 import styles from '../styles/ListadoProducto.module.scss'
 import { CartContext } from '../context/CartProvider'
+import { useCart } from '../hooks/useCart'
 
 export const ListadoProducto = ({ productos }) => {
-    const { agregarProducto, carro, setCarro } = useContext(CartContext)
+    // const { agregarProducto, carro, setCarro } = useContext(CartContext)
+    const { agregarProducto, carro, setCarro } = useCart()
 
+    console.log(carro)
     const handleSubmit = (e, producto) => {
         e.preventDefault()
         console.log('Datos del producto:', producto)
@@ -18,13 +21,13 @@ export const ListadoProducto = ({ productos }) => {
         })
     }
 
-    const aumentarCantidad = (id) => {
-        const producto = carro.find((item) => item.producto.id === id)
-        console.log(producto)
-        // producto.producto.cantidad++
-        // setCarro([...carro])
-        // console.log(carro)
-    }
+    // const aumentarCantidad = (id) => {
+    //     const producto = carro.find((item) => item.producto.id === id)
+    //     console.log(producto)
+    //     // producto.producto.cantidad++
+    //     // setCarro([...carro])
+    //     // console.log(carro)
+    // }
 
     return (
         <>
@@ -36,8 +39,10 @@ export const ListadoProducto = ({ productos }) => {
                             <div className={styles['producto-data']}>
                                 <label name="nombre">{producto.nombre}</label>
                                 <p name="precio">{`$${producto.precio}`}</p>
-                                <input type="button" value="+" onClick={aumentarCantidad}/>
                                 <input className={styles['producto-btn']} type="submit" value="Agregar al carro" />
+                                {/* <button className={styles['producto-btn']} onClick={() => agregarProducto(producto)}>
+                                Agregar al Carro
+                            </button> */}
                             </div>
                         </form>
                     </li>

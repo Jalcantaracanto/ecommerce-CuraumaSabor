@@ -2,6 +2,17 @@ import React, { useState, useEffect } from 'react'
 
 export const CartContext = React.createContext([])
 
+// const initialState = []
+// const reducer = (state, action) => {
+//     switch (action.type) {
+//         case 'ADD_TO_CART':
+            
+
+//     }
+//     return state
+// }
+
+
 export const CartProvider = ({ children }) => {
     const [carro, setCarro] = useState([])
 
@@ -19,20 +30,27 @@ export const CartProvider = ({ children }) => {
     }, [carro])
 
     //vacio el carro
-    const limpiarCarro = () => {
+    const limpiarCarro = (e) => {
+        e.preventDefault()
         setCarro([])
-        localStorage.clear()
     }
 
-    //Verifica si un elemento con el id especificado se encuentra en el arreglo carro
-    const estaEnCarro = (id) => (carro.find((item) => item.id === id) ? true : false)
+    // //Verifica si un elemento con el id especificado se encuentra en el arreglo carro
+    // const estaEnCarro = (id) => (carro.find((item) => item.id === id) ? true : false)
 
-    //Quita un producto del carro (que aun no está hecho)
-    const quitarProducto = (id) => setCarro(carro.filter((item) => item.id !== id))
+    // //Quita un producto del carro (que aun no está hecho)
+    // const quitarProducto = (id) => setCarro(carro.filter((item) => item.id !== id))
 
     const agregarProducto = (producto) => {
-        setCarro([...carro, producto])
-        console.log('Carro:', carro)
+        //chequeo si el producto ya está en el carro
+        const productoEnCarro = carro.findIndex((item) => item.id === producto.id)
+        if (productoEnCarro > 0) {
+            //una forma para clonar el carro
+            const nuevoCarro = structuredClone(carro)
+            nuevoCarro[productoEnCarro].cantidad += 1
+            return setCarro(nuevoCarro)
+        }
+        setCarro((carroPrev) => [...carroPrev, { ...producto, cantidad: 1 }])
     }
 
     return (
@@ -40,8 +58,6 @@ export const CartProvider = ({ children }) => {
             value={{
                 carro,
                 limpiarCarro,
-                estaEnCarro,
-                quitarProducto,
                 agregarProducto,
                 setCarro,
             }}
