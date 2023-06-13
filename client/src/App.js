@@ -8,6 +8,7 @@ import React from 'react'
 import { CartProvider } from './context/CartProvider'
 import { NavbarWeb } from './components/NavbarWeb'
 import { CarroCompras } from './views/CarroCompras'
+import { AgregarProducto } from './views/AgregarProducto'
 
 function App() {
     return (
@@ -18,8 +19,8 @@ function App() {
                     <Route path="/" element={<Productos />} />
                     <Route path="/home" element={<Productos />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/Productos/nuevo-producto" element={<Register />} />
-                    <Route path="/Productos/lista-productos" element={<Productos />} />
+                    <Route path="/productos/nuevo-producto" element={<AgregarProducto />} />
+                    <Route path="/productos/lista-productos" element={<Productos />} />
                     <Route path="/Carro-Compras" element={<CarroCompras />} />
                 </Routes>
             </CartProvider>

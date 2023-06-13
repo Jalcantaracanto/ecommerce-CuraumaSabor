@@ -5,19 +5,17 @@ import { useCart } from '../hooks/useCart'
 
 export const ListadoProducto = ({ productos }) => {
     // const { agregarProducto, carro, setCarro } = useContext(CartContext)
-    const { agregarProducto, carro, setCarro } = useCart()
+    const { agregarProducto, carro } = useCart()
 
     console.log(carro)
     const handleSubmit = (e, producto) => {
         e.preventDefault()
         console.log('Datos del producto:', producto)
         agregarProducto({
-            producto: {
-                id: producto._id,
-                nombre: producto.nombre,
-                precio: producto.precio,
-                cantidad: 0,
-            },
+            id: producto._id,
+            nombre: producto.nombre,
+            precio: producto.precio,
+            cantidad: 1,
         })
     }
 

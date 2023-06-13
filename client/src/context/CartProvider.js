@@ -6,12 +6,10 @@ export const CartContext = React.createContext([])
 // const reducer = (state, action) => {
 //     switch (action.type) {
 //         case 'ADD_TO_CART':
-            
 
 //     }
 //     return state
 // }
-
 
 export const CartProvider = ({ children }) => {
     const [carro, setCarro] = useState([])
@@ -41,16 +39,43 @@ export const CartProvider = ({ children }) => {
     // //Quita un producto del carro (que aun no está hecho)
     // const quitarProducto = (id) => setCarro(carro.filter((item) => item.id !== id))
 
-    const agregarProducto = (producto) => {
-        //chequeo si el producto ya está en el carro
-        const productoEnCarro = carro.findIndex((item) => item.id === producto.id)
-        if (productoEnCarro > 0) {
-            //una forma para clonar el carro
-            const nuevoCarro = structuredClone(carro)
-            nuevoCarro[productoEnCarro].cantidad += 1
-            return setCarro(nuevoCarro)
+    const agregarProducto = (productoNuevo) => {
+        let nuevoCarro = []
+        let carroPronto = false
+
+        if (carro.length === 0) {
+            setCarro([productoNuevo])
+        } else {
+            carro.forEach((unProducto) => {
+                if (unProducto.id === productoNuevo.id) {
+                    //si el producto ya está en el carro, el carro nuevo y el carro viejo son iguales. (salvo por la cantidad de ese producto)
+                    nuevoCarro = [...carro]
+                    nuevoCarro.forEach((otroProducto) => {
+                        if (otroProducto.id === productoNuevo.id) {
+                            otroProducto.cantidad += productoNuevo.cantidad
+                            carroPronto = true
+                        }
+                    })
+                }
+            })
+            if (!carroPronto) {
+                nuevoCarro = [...carro, productoNuevo]
+            }
+            setCarro([...nuevoCarro])
         }
-        setCarro((carroPrev) => [...carroPrev, { ...producto, cantidad: 1 }])
+
+        //chequeo si el producto ya está en el carro
+        // const productoEnCarro = carro.findIndex((item) => item._id === producto.id)
+        // if (productoEnCarro > 0) {
+        //     //una forma para clonar el carro
+        //     const nuevoCarro = structuredClone(carro)
+        //     nuevoCarro[productoEnCarro].cantidad += 1
+        //     return setCarro(nuevoCarro)
+        // }
+
+        // setCarro((carro) => [...carro, { ...producto, cantidad: 1 }])
+
+        // console.log(carro)
     }
 
     return (

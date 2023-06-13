@@ -16,10 +16,13 @@ export const NavbarWeb = () => {
                     <NavLink to={'/home'} className={styles['links']}>
                         Home
                     </NavLink>
-                    <NavLink to={'/Productos/lista-productos'} className={styles['links']}>
+                    <NavLink to={'/productos/lista-productos'} className={styles['links']}>
                         Productos
                     </NavLink>
                     <NavLink className={styles['links']}>Acerca de</NavLink>
+                    <NavLink to={'/productos/nuevo-producto'} className={styles['links']}>
+                        Agregar Producto
+                    </NavLink>
                 </div>
                 <div>
                     <form onSubmit={limpiarCarro}>
