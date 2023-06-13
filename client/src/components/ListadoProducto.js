@@ -1,11 +1,64 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styles from '../styles/ListadoProducto.module.scss'
-import { CartContext } from '../context/CartProvider'
 import { useCart } from '../hooks/useCart'
+import Cookies from 'js-cookie'
+import { UserContext } from '../context/UserProvider'
 
 export const ListadoProducto = ({ productos }) => {
-    // const { agregarProducto, carro, setCarro } = useContext(CartContext)
+    const { setUsuario, usuario } = useContext(UserContext)
+
     const { agregarProducto, carro } = useCart()
+
+    // const userToken = Cookies.get('usertoken')
+    // console.log(userToken)
+    // if (userToken) {
+    //     const decodedToken = decodeURIComponent(escape(atob(userToken.split('.')[1])))
+    //     const { id, email, firstName, lastName, direccion } = JSON.parse(decodedToken)
+    //     console.log(id) // ID del usuario
+    //     console.log(email) // Correo electrónico del usuario
+    //     console.log(firstName) // Nombre del usuario
+    //     console.log(lastName) // Apellido del usuario
+    //     console.log(direccion) // Objeto con la información de dirección
+
+    //     setUsuario([{
+    //         id: id,
+    //         correo: email,
+    //         nombre: firstName,
+    //         apellido: lastName,
+    //         direccion: {
+    //             calle: direccion.calle,
+    //             numero: direccion.numero,
+    //             ciudad: direccion.ciudad,
+    //             telefono: direccion.telefono,
+    //         },
+    //     }])
+    // }
+
+    useEffect(() => {
+        const userToken = Cookies.get('usertoken')
+        if (userToken) {
+            const decodedToken = decodeURIComponent(escape(atob(userToken.split('.')[1])))
+            const { id, email, firstName, lastName, direccion } = JSON.parse(decodedToken)
+            console.log(id) // ID del usuario
+            console.log(email) // Correo electrónico del usuario
+            console.log(firstName) // Nombre del usuario
+            console.log(lastName) // Apellido del usuario
+            console.log(direccion) // Objeto con la información de dirección
+
+            setUsuario({
+                id: id,
+                correo: email,
+                nombre: firstName,
+                apellido: lastName,
+                direccion: {
+                    calle: direccion.calle,
+                    numero: direccion.numero,
+                    ciudad: direccion.ciudad,
+                    telefono: direccion.telefono,
+                },
+            })
+        }
+    }, [])
 
     console.log(carro)
     const handleSubmit = (e, producto) => {

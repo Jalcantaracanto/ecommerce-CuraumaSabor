@@ -1,12 +1,25 @@
 import React, { useContext } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import styles from '../styles/NavbarWeb.module.scss'
 import bolsa from '../assets/icons/shopping-bag.svg'
 import { CartContext } from '../context/CartProvider'
-import { CartIcon } from '../assets/icons/Icons'
+import { logout } from '../services/user-service'
 
 export const NavbarWeb = () => {
     const { limpiarCarro } = useContext(CartContext)
+
+    const navigate = useNavigate()
+
+    const desconectar = () => {
+        logout()
+            .then((response) => {
+                console.log(response)
+                navigate('/login')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
     return (
         <>
@@ -25,6 +38,7 @@ export const NavbarWeb = () => {
                     </NavLink>
                 </div>
                 <div>
+                    <button type='button' onClick={desconectar}> desconectar</button>
                     <form onSubmit={limpiarCarro}>
                         <input type="submit" value="Vaciar Carro" />
                     </form>

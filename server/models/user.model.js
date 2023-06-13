@@ -42,6 +42,10 @@ const UserSchema = new Schema(
                 required: [true, 'Telefono es requerido'],
             },
         },
+        admin: {
+            type: Boolean,
+            default: 'false',
+        }
     },
     { timestamps: true }
 )

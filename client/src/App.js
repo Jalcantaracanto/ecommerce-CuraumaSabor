@@ -9,21 +9,24 @@ import { CartProvider } from './context/CartProvider'
 import { NavbarWeb } from './components/NavbarWeb'
 import { CarroCompras } from './views/CarroCompras'
 import { AgregarProducto } from './views/AgregarProducto'
+import { UserProvider } from './context/UserProvider'
 
 function App() {
     return (
         <>
-            <CartProvider>
-                <NavbarWeb />
-                <Routes>
-                    <Route path="/" element={<Productos />} />
-                    <Route path="/home" element={<Productos />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/productos/nuevo-producto" element={<AgregarProducto />} />
-                    <Route path="/productos/lista-productos" element={<Productos />} />
-                    <Route path="/Carro-Compras" element={<CarroCompras />} />
-                </Routes>
-            </CartProvider>
+            <UserProvider>
+                <CartProvider>
+                    <NavbarWeb />
+                    <Routes>
+                        <Route path="/" element={<Productos />} />
+                        <Route path="/home" element={<Productos />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/productos/nuevo-producto" element={<AgregarProducto />} />
+                        <Route path="/productos/lista-productos" element={<Productos />} />
+                        <Route path="/Carro-Compras" element={<CarroCompras />} />
+                    </Routes>
+                </CartProvider>
+            </UserProvider>
         </>
     )
 }

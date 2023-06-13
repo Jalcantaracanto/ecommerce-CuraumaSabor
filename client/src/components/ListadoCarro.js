@@ -1,9 +1,15 @@
 import React, { useContext } from 'react'
 import { CartContext } from '../context/CartProvider'
 import styles from '../styles/CarroCompras.module.scss'
+import { UserContext } from '../context/UserProvider'
+
 
 export const ListadoCarro = () => {
+
+    const { usuario } = useContext(UserContext)
     const { carro } = useContext(CartContext)
+
+    console.log(usuario)
 
     //Calcular Total del Carro
     const calcularTotal = () => {
@@ -50,9 +56,7 @@ export const ListadoCarro = () => {
                 <section className={styles['detalle']}>
                     <h3>Total del Carrito</h3>
                     <section className={styles['total']}>
-                        <label htmlFor="total">
-                            Total a pagar:
-                        </label>
+                        <label htmlFor="total">Total a pagar:</label>
                         <p>{`$${calcularTotal()}`}</p>
                     </section>
 

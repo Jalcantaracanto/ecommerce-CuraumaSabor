@@ -1,9 +1,10 @@
 const { crearProducto, listarProductos, listarProducto, actualizarProducto, eliminarProducto } = require('../controllers/producto.controllers')
+const { authenticate } = require('../config/jwt.config')
 
 module.exports = (app) => {
-    app.post('/api/producto', crearProducto)
-    app.get('/api/productos', listarProductos)
-    app.get('/api/producto/:id', listarProducto)
-    app.put('/api/producto/:id', actualizarProducto)
-    app.delete('/api/producto/:id', eliminarProducto)
+    app.post('/api/producto', authenticate, crearProducto)
+    app.get('/api/productos', authenticate, listarProductos)
+    app.get('/api/producto/:id', authenticate, listarProducto)
+    app.put('/api/producto/:id', authenticate, actualizarProducto)
+    app.delete('/api/producto/:id', authenticate, eliminarProducto)
 }

@@ -10,7 +10,7 @@ require('dotenv').config()
 // console.log(process.env.SECRET_KEY)
 
 app.use(cookieParser())
-app.use(cors())
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 

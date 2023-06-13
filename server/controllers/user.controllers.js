@@ -4,10 +4,10 @@ const jwt = require('jsonwebtoken')
 
 module.exports.register = (req, res) => {
     User.create(req.body)
-        .then((newUser) => res.json({  user: newUser }))
+        .then((newUser) => res.json({ user: newUser }))
         .catch((err) => {
             console.log(err)
-            res.status(500).json({  error: err })
+            res.status(500).json({ error: err })
         })
 }
 
@@ -25,18 +25,26 @@ module.exports.login = (req, res) => {
                         const userToken = jwt.sign(
                             {
                                 id: user._id,
+                                email: user.email,
+                                firstName: user.firstName,
+                                lastName: user.lastName,
+                                direccion: {
+                                    ciudad: user.direccion.ciudad,
+                                    calle: user.direccion.calle,
+                                    numero: user.direccion.numero,
+                                    telefono: user.direccion.telefono,
+                                }
                             },
                             process.env.SECRET_KEY
                         )
-
                         res.cookie('usertoken', userToken, process.env.SECRET_KEY, {
                             httpOnly: true,
                         }).json({ msg: 'Conexión Exitosa!' })
                     } else {
-                        res.status(403).json({ msg: 'Contraseña incorrecta' })
+                        res.status(403).json({ msg: 'Correo o contraseña incorrectos' })
                     }
                 })
-                .catch((err) => res.status(400).json({ msg: 'Contraseña incorrecta', error: err }))
+                .catch((err) => res.status(400).json({ msg: 'Correo o contraseña incorrectos', error: err }))
         }
     })
 }

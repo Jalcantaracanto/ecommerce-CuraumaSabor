@@ -63,19 +63,6 @@ export const CartProvider = ({ children }) => {
             }
             setCarro([...nuevoCarro])
         }
-
-        //chequeo si el producto ya está en el carro
-        // const productoEnCarro = carro.findIndex((item) => item._id === producto.id)
-        // if (productoEnCarro > 0) {
-        //     //una forma para clonar el carro
-        //     const nuevoCarro = structuredClone(carro)
-        //     nuevoCarro[productoEnCarro].cantidad += 1
-        //     return setCarro(nuevoCarro)
-        // }
-
-        // setCarro((carro) => [...carro, { ...producto, cantidad: 1 }])
-
-        // console.log(carro)
     }
 
     return (

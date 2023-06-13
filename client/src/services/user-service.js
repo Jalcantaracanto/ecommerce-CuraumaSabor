@@ -1,12 +1,5 @@
 import axios from 'axios'
 
-const login = (email, password) => {
-    return axios.post('/api/user/login', { email, password }).then((response) => {
-        if (response.data.accessToken) {
-            localStorage.setItem('user', JSON.stringify(response.data))
-        }
-        return response.data.catch((error) => {
-            console.log(error)
-        })
-    })
-}
+export const login = (usuario) => axios.post('http://localhost:8080/api/user/login', usuario, { withCredentials: true })
+
+export const logout = () => axios.post('http://localhost:8080/api/user/logout', {}, { withCredentials: true })
