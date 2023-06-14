@@ -4,9 +4,11 @@ import styles from '../styles/NavbarWeb.module.scss'
 import bolsa from '../assets/icons/shopping-bag.svg'
 import { CartContext } from '../context/CartProvider'
 import { logout } from '../services/user-service'
+import { UserContext } from '../context/UserProvider'
 
 export const NavbarWeb = () => {
     const { limpiarCarro } = useContext(CartContext)
+    const { usuario } = useContext(UserContext)
 
     const navigate = useNavigate()
 
@@ -33,12 +35,17 @@ export const NavbarWeb = () => {
                         Productos
                     </NavLink>
                     <NavLink className={styles['links']}>Acerca de</NavLink>
-                    <NavLink to={'/productos/nuevo-producto'} className={styles['links']}>
-                        Agregar Producto
-                    </NavLink>
+                    {usuario.admin === true ? (
+                        <NavLink to={'/productos/nuevo-producto'} className={styles['links']}>
+                            Agregar Producto
+                        </NavLink>
+                    ) : null}
                 </div>
                 <div>
-                    <button type='button' onClick={desconectar}> desconectar</button>
+                    <button type="button" onClick={desconectar}>
+                        {' '}
+                        desconectar
+                    </button>
                     <form onSubmit={limpiarCarro}>
                         <input type="submit" value="Vaciar Carro" />
                     </form>

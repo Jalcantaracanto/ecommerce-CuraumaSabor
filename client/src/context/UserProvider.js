@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 export const UserContext = React.createContext([])
 
@@ -8,6 +8,7 @@ export const UserProvider = ({ children }) => {
         correo: '',
         nombre: '',
         apellido: '',
+        admin: false,
         direccion: {
             calle: '',
             numero: '',
@@ -23,7 +24,6 @@ export const UserProvider = ({ children }) => {
             value={{
                 setUsuario,
                 usuario
-                
             }}
         >
             {children}

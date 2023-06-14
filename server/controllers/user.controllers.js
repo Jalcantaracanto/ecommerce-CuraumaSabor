@@ -28,12 +28,13 @@ module.exports.login = (req, res) => {
                                 email: user.email,
                                 firstName: user.firstName,
                                 lastName: user.lastName,
+                                admin: user.admin,
                                 direccion: {
                                     ciudad: user.direccion.ciudad,
                                     calle: user.direccion.calle,
                                     numero: user.direccion.numero,
                                     telefono: user.direccion.telefono,
-                                }
+                                },
                             },
                             process.env.SECRET_KEY
                         )
@@ -63,4 +64,17 @@ module.exports.findUser = (req, res) => {
         .select({ password: 0 })
         .then((user) => res.json({ user }))
         .catch((err) => res.json({ message: 'Error al buscar usuario', error: err }))
+}
+
+module.exports.findAllUsers = (req, res) => {
+    User.find()
+        .select({ password: 0 })
+        .then((users) => res.json({ users }))
+        .catch((err) => res.json({ message: 'Error al buscar usuarios', error: err }))
+}
+
+module.exports.updateUser = (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+        .then((updatedUser) => res.json({ user: updatedUser }))
+        .catch((err) => res.json({ message: 'Error al actualizar usuario', error: err }))
 }

@@ -2,12 +2,13 @@ import React, { useContext } from 'react'
 import { CartContext } from '../context/CartProvider'
 import styles from '../styles/CarroCompras.module.scss'
 import { UserContext } from '../context/UserProvider'
-
+import emailjs from '@emailjs/browser'
+import { useNavigate } from 'react-router-dom'
 
 export const ListadoCarro = () => {
-
     const { usuario } = useContext(UserContext)
-    const { carro } = useContext(CartContext)
+    const { carro, limpiarCarro } = useContext(CartContext)
+    const navigate = useNavigate()
 
     console.log(usuario)
 
@@ -21,6 +22,43 @@ export const ListadoCarro = () => {
         // Formatear el total con puntos cada tres dígitos
         const totalFormateado = total.toLocaleString()
         return totalFormateado
+    }
+
+    const comprar = () => {
+        try {
+            const { nombre, apellido, correo } = usuario
+            const carroCopia = [...carro]
+            const total = calcularTotal()
+            const listaProductos = carroCopia.map((item, index) => `${index + 1}. ${item.nombre} - Precio: $${item.precio * item.cantidad}`).join('\n')
+
+            let templateParams = {
+                nombre: nombre,
+                apellido: apellido,
+                detalle: listaProductos,
+                correo: correo,
+                total: total,
+            }
+
+            emailjs.send('service_7nwli6o', 'template_qvpxwhn', templateParams, 'KLSEKZcO95MBJAoTm').then(
+                function (response) {
+                    console.log('SUCCESS!', response.status, response.text)
+                },
+                function (error) {
+                    console.log('FAILED...', error)
+                }
+            )
+
+            const confirmacionCompra = window.confirm('Compra realizada con éxito. ¿Desea ir a la página de inicio?')
+            // limpiarCarro()
+
+            if (confirmacionCompra) {
+                // Redirigir al usuario a '/home' si confirmación es true
+                navigate('/home')
+            }
+        } catch (error) {
+            console.log(error)
+            alert('Error al realizar la compra')
+        }
     }
 
     return (
@@ -60,7 +98,7 @@ export const ListadoCarro = () => {
                         <p>{`$${calcularTotal()}`}</p>
                     </section>
 
-                    <button>Comprar</button>
+                    <button onClick={comprar}>Comprar</button>
                 </section>
             </main>
         </>

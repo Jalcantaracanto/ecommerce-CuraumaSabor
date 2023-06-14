@@ -1,12 +1,33 @@
 const Producto = require('../models/producto.model')
 
-module.exports.crearProducto = (req, res) => {
-    Producto.create(req.body)
-        .then((newProducto) => res.json({ producto: newProducto }))
-        .catch((err) => {
-            console.log(err)
-            res.status(500).json({ error: err })
+// module.exports.crearProducto = (req, res) => {
+//     Producto.create(req.body)
+//         .then((newProducto) => res.json({ producto: newProducto }))
+//         .catch((err) => {
+//             console.log(err)
+//             res.status(500).json({ error: err })
+//         })
+// }
+
+module.exports.crearProducto = async (req, res) => {
+    try {
+        const { nombre, precio, descripcion, categoria } = req.body
+
+        const nuevoProducto = new Producto({
+            nombre,
+            precio,
+            descripcion,
+            categoria,
+            imagen: req.file.filename,
         })
+
+        await nuevoProducto.save()
+
+        res.json({ producto: nuevoProducto })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: err })
+    }
 }
 
 module.exports.listarProductos = (req, res) => {

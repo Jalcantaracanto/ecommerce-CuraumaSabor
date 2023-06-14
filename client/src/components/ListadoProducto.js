@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 import { UserContext } from '../context/UserProvider'
 
 export const ListadoProducto = ({ productos }) => {
-    const { setUsuario, usuario } = useContext(UserContext)
+    const { setUsuario } = useContext(UserContext)
 
     const { agregarProducto, carro } = useCart()
 
@@ -35,27 +35,31 @@ export const ListadoProducto = ({ productos }) => {
     // }
 
     useEffect(() => {
+        //Traer el token del usuario
         const userToken = Cookies.get('usertoken')
         if (userToken) {
             const decodedToken = decodeURIComponent(escape(atob(userToken.split('.')[1])))
-            const { id, email, firstName, lastName, direccion } = JSON.parse(decodedToken)
+            const { id, email, firstName, lastName, direccion, admin } = JSON.parse(decodedToken)
             console.log(id) // ID del usuario
             console.log(email) // Correo electrónico del usuario
             console.log(firstName) // Nombre del usuario
             console.log(lastName) // Apellido del usuario
             console.log(direccion) // Objeto con la información de dirección
+            console.log(admin) // Tipo de usuario
 
             setUsuario({
                 id: id,
                 correo: email,
                 nombre: firstName,
                 apellido: lastName,
+                admin: admin,
                 direccion: {
                     calle: direccion.calle,
                     numero: direccion.numero,
                     ciudad: direccion.ciudad,
                     telefono: direccion.telefono,
                 },
+
             })
         }
     }, [])
