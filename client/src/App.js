@@ -10,6 +10,8 @@ import { NavbarWeb } from './components/NavbarWeb'
 import { CarroCompras } from './views/CarroCompras'
 import { AgregarProducto } from './views/AgregarProducto'
 import { UserProvider } from './context/UserProvider'
+import { ListaProductos } from './views/ListaProductos'
+import { DetalleProducto } from './views/DetalleProducto'
 
 function App() {
     return (
@@ -24,6 +26,8 @@ function App() {
                         <Route path="/productos/nuevo-producto" element={<AgregarProducto />} />
                         <Route path="/productos/lista-productos" element={<Productos />} />
                         <Route path="/Carro-Compras" element={<CarroCompras />} />
+                        <Route path="/productos/lista-admin" element={<ListaProductos />} />
+                        <Route path="/productos/lista-admin/detalle/:id" element={<DetalleProducto />} />
                     </Routes>
                 </CartProvider>
             </UserProvider>

@@ -40,12 +40,12 @@ export const ListadoProducto = ({ productos }) => {
         if (userToken) {
             const decodedToken = decodeURIComponent(escape(atob(userToken.split('.')[1])))
             const { id, email, firstName, lastName, direccion, admin } = JSON.parse(decodedToken)
-            console.log(id) // ID del usuario
-            console.log(email) // Correo electrónico del usuario
-            console.log(firstName) // Nombre del usuario
-            console.log(lastName) // Apellido del usuario
-            console.log(direccion) // Objeto con la información de dirección
-            console.log(admin) // Tipo de usuario
+            // console.log(id) // ID del usuario
+            // console.log(email) // Correo electrónico del usuario
+            // console.log(firstName) // Nombre del usuario
+            // console.log(lastName) // Apellido del usuario
+            // console.log(direccion) // Objeto con la información de dirección
+            // console.log(admin) // Tipo de usuario
 
             setUsuario({
                 id: id,
@@ -59,12 +59,11 @@ export const ListadoProducto = ({ productos }) => {
                     ciudad: direccion.ciudad,
                     telefono: direccion.telefono,
                 },
-
             })
         }
     }, [])
 
-    console.log(carro)
+    // console.log(carro)
     const handleSubmit = (e, producto) => {
         e.preventDefault()
         console.log('Datos del producto:', producto)
@@ -87,21 +86,24 @@ export const ListadoProducto = ({ productos }) => {
     return (
         <>
             <ul className={styles['producto']}>
-                {productos.map((producto, index) => (
-                    <li key={index}>
-                        <form onSubmit={(e) => handleSubmit(e, producto)}>
-                            <img className={styles['producto-img']} src="https://www.recetasderechupete.com/wp-content/uploads/2020/03/Pisco-Sour.jpg" alt="Pisco Sour" />
-                            <div className={styles['producto-data']}>
-                                <label name="nombre">{producto.nombre}</label>
-                                <p name="precio">{`$${producto.precio}`}</p>
-                                <input className={styles['producto-btn']} type="submit" value="Agregar al carro" />
-                                {/* <button className={styles['producto-btn']} onClick={() => agregarProducto(producto)}>
-                                Agregar al Carro
-                            </button> */}
-                            </div>
-                        </form>
-                    </li>
-                ))}
+                {productos.map((producto, index) => {
+                    const ruta = producto.imagen.path
+                    const cortar = ruta.split('\\').slice(-1)[0]
+                    console.log(cortar)
+                    return (
+                        <li key={index}>
+                            <form onSubmit={(e) => handleSubmit(e, producto)} className={styles['test']}>
+                                <img className={styles['producto-img']} src={`http://localhost:8080/${cortar}`} alt={producto.descripcion} />
+
+                                <div className={styles['producto-data']}>
+                                    <label name="nombre">{producto.nombre}</label>
+                                    <p name="precio">{`$${producto.precio}`}</p>
+                                    <input className={styles['producto-btn']} type="submit" value="Agregar al carro" />
+                                </div>
+                            </form>
+                        </li>
+                    )
+                })}
             </ul>
         </>
     )

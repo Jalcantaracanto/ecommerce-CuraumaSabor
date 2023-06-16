@@ -13,9 +13,19 @@
         align-items: center;
     }
 
+    .test{
+        text-align: center;
+    }
+
+    .box-img{
+        width: 200px;
+        height: 150px;
+        background-color: red;
+    }
+
     .producto-img {
-        height: auto;
-        width: 100%;
+        height: 150px;
+        width: auto;
         border-radius: 5px;
     }
 

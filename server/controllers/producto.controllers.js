@@ -13,12 +13,14 @@ module.exports.crearProducto = async (req, res) => {
     try {
         const { nombre, precio, descripcion, categoria } = req.body
 
+        console.log(req.body)
+
         const nuevoProducto = new Producto({
             nombre,
             precio,
             descripcion,
             categoria,
-            imagen: req.file.filename,
+            imagen: req.file,
         })
 
         await nuevoProducto.save()
@@ -26,7 +28,7 @@ module.exports.crearProducto = async (req, res) => {
         res.json({ producto: nuevoProducto })
     } catch (err) {
         console.log(err)
-        res.status(500).json({ error: err })
+        res.status(500).json({ error: err.message })
     }
 }
 
@@ -43,8 +45,10 @@ module.exports.listarProducto = (req, res) => {
 }
 
 module.exports.actualizarProducto = (req, res) => {
-    Producto.findOneAndUpdate({ _id: req.params._id }, req.body, { new: true })
-        .then((ActualizarProducto) => res.json({ producto: ActualizarProducto }))
+    const { precio, descripcion } = req.body // Extraemos solo las propiedades necesarias
+
+    Producto.findOneAndUpdate({ _id: req.params.id }, { precio, descripcion }, { new: true })
+        .then((actualizarProducto) => res.json({ producto: actualizarProducto }))
         .catch((err) => res.status(500).json({ message: 'Error al actualizar producto', error: err }))
 }
 
