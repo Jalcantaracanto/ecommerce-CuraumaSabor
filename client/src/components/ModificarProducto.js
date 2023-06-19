@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import styles from '../styles/AgregarProducto.module.scss'
 import { useParams, useNavigate } from 'react-router-dom'

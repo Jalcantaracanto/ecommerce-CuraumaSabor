@@ -11,7 +11,7 @@ const Producto = require('../models/producto.model')
 
 module.exports.crearProducto = async (req, res) => {
     try {
-        const { nombre, precio, descripcion, categoria } = req.body
+        const { nombre, precio, descripcion } = req.body
 
         console.log(req.body)
 
@@ -19,7 +19,6 @@ module.exports.crearProducto = async (req, res) => {
             nombre,
             precio,
             descripcion,
-            categoria,
             imagen: req.file,
         })
 

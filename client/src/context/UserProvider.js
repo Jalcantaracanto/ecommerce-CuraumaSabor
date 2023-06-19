@@ -15,6 +15,7 @@ export const UserProvider = ({ children }) => {
             ciudad: '',
             telefono: '',
         },
+        conectado:false
     })
 
 

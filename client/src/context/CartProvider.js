@@ -28,8 +28,7 @@ export const CartProvider = ({ children }) => {
     }, [carro])
 
     //vacio el carro
-    const limpiarCarro = (e) => {
-        e.preventDefault()
+    const limpiarCarro = () => {
         setCarro([])
     }
 

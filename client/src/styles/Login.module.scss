@@ -1,7 +1,7 @@
 .main-container {
     background-image: url('https://r4.wallpaperflare.com/wallpaper/757/109/194/alcohol-glass-liquid-drink-wallpaper-9980489d21ba2dbba687a8ffa051f67d.jpg');
-    background-size: cover;
-    position: fixed;
+
+    position: relative;
     top: 0;
     right: 0;
     bottom: 0;
@@ -23,7 +23,6 @@
 .form-container {
     height: 70vh;
     width: 20vw;
-    
 }
 
 .form-content {
@@ -51,44 +50,43 @@
 
 .content {
     flex: 1;
-}
 
-input[type='button'] {
-    width: 50%;
-    height: 40px;
-    border: none;
-    border-radius: 5px;
-    background-color: #849484;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: 0.3s;
-}
+    label {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
 
-label {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+    input[type='password'],
+    input[type='email'] {
+        width: 70%;
+        height: 30px;
+        border: 1px solid #948784;
+        border-radius: 5px;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
 
-input[type='password'],
-input[type='email'] {
-    width: 70%;
-    height: 30px;
-    border: 1px solid #948784;
-    border-radius: 5px;
-    padding: 5px;
-    margin-bottom: 10px;
-}
+    input[type='password']:hover,
+    input[type='email']:hover {
+        border: 1px solid #242323;
+        transition: 2ms;
+    }
 
-input[type='password']:hover,
-input[type='email']:hover {
-    border: 1px solid #242323;
-    transition: 2ms;
+    input[type='submit'] {
+        width: 50%;
+        height: 40px;
+        border: none;
+        border-radius: 5px;
+        background-color: #849484;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
 }
-
 
 .form-group {
     width: 100%;

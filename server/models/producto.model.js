@@ -19,12 +19,6 @@ const ProductoSchema = new Schema(
             type: String,
             required: [true, 'Descripcion de producto es requerido'],
         },
-        // categoria: {
-        //     type: String,
-        //     required: [true, 'Categoria de producto es requerido'],
-        //     enum: ["Pisco", "Comida", "Pack"],
-        //     default: "Pisco",
-        // },
         imagen: {
             type: {},
             // required: [true, 'Imagen de producto es requerido'],
@@ -36,6 +30,5 @@ const ProductoSchema = new Schema(
 // ProductoSchema.methods.setImgUrl = function setImgUrl(filename) {
 //     this.imagen = `http://localhost:8080/public/${filename}`
 // }
-
 
 module.exports = model('Producto', ProductoSchema)

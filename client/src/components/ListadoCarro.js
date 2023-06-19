@@ -1,16 +1,57 @@
 import React, { useContext } from 'react'
 import { CartContext } from '../context/CartProvider'
-import styles from '../styles/CarroCompras.module.scss'
 import { UserContext } from '../context/UserProvider'
 import emailjs from '@emailjs/browser'
 import { useNavigate } from 'react-router-dom'
+
+//Material UI
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
+import { styled } from '@mui/material/styles'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Unstable_Grid2'
+
+//sweet alert
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 export const ListadoCarro = () => {
     const { usuario } = useContext(UserContext)
     const { carro, limpiarCarro } = useContext(CartContext)
     const navigate = useNavigate()
 
-    console.log(usuario)
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+            backgroundColor: '#cecec7',
+            color: theme.palette.common.black,
+        },
+        [`&.${tableCellClasses.body}`]: {
+            fontSize: 14,
+        },
+    }))
+
+    const MySwal = withReactContent(Swal)
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }))
+
+    // console.log(usuario)
 
     //Calcular Total del Carro
     const calcularTotal = () => {
@@ -48,13 +89,17 @@ export const ListadoCarro = () => {
                 }
             )
 
-            const confirmacionCompra = window.confirm('Compra realizada con éxito. ¿Desea ir a la página de inicio?')
-            // limpiarCarro()
-
-            if (confirmacionCompra) {
-                // Redirigir al usuario a '/home' si confirmación es true
-                navigate('/home')
-            }
+            MySwal.fire({
+                title: 'Compra realizada con Exito',
+                icon: 'success',
+                text: 'Le llegará un correo con el detalle de su compra, Muchas gracias por su compra.',
+                confirmButtonText: 'Aceptar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/home')
+                    limpiarCarro()
+                }
+            })
         } catch (error) {
             console.log(error)
             alert('Error al realizar la compra')
@@ -63,44 +108,53 @@ export const ListadoCarro = () => {
 
     return (
         <>
-            <main className={styles['main-carro']}>
-                <section className={styles['tabla']}>
-                    <h2>Carro de Compras</h2>
-                    <table className={styles['tabla-carro']}>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nombre</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {carro.map((item, index) => (
-                                <tr key={index}>
-                                    <td>{index + 1}</td>
-                                    <td>{item.nombre}</td>
-                                    <td>{item.cantidad}</td>
-                                    <td>{parseInt(item.precio * item.cantidad).toLocaleString()}</td>
-                                </tr>
-                            ))}
-                            {/* <tr>
-                                <td colSpan="2">Total:</td>
-                                <td>{calcularTotal()}</td>
-                            </tr> */}
-                        </tbody>
-                    </table>
-                </section>
-                <section className={styles['detalle']}>
-                    <h3>Total del Carrito</h3>
-                    <section className={styles['total']}>
-                        <label htmlFor="total">Total a pagar:</label>
-                        <p>{`$${calcularTotal()}`}</p>
-                    </section>
-
-                    <button onClick={comprar}>Comprar</button>
-                </section>
-            </main>
+            <Grid container spacing={3} padding={2}>
+                <Grid md={10}>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 700 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell>Producto</StyledTableCell>
+                                    <StyledTableCell align="right">Precio</StyledTableCell>
+                                    <StyledTableCell align="right">Cantidad</StyledTableCell>
+                                    <StyledTableCell align="right">Total</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {carro.map((item, index) => (
+                                    <StyledTableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                        <TableCell component="th" scope="row">
+                                            {item.nombre}
+                                        </TableCell>
+                                        <TableCell align="right">{`$${item.precio}`}</TableCell>
+                                        <TableCell align="right">{item.cantidad}</TableCell>
+                                        <TableCell align="right">{`$${parseInt(item.precio * item.cantidad).toLocaleString()}`}</TableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
+                <Grid sx={2} md={2}>
+                    <Card variant="outlined" sx={{ minHeight: 450, minWidth: 200, display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
+                        <CardContent>
+                            <Typography variant="h5" component="div" textAlign={'center'}>
+                                Total del Carrito
+                            </Typography>
+                        </CardContent>
+                        <CardContent>
+                            <Typography variant="h6" textAlign={'center'}>
+                                {`$${calcularTotal()}`}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button variant="contained" size="medium" sx={{ minWidth: 150 }} onClick={comprar} color="success">
+                                Comprar
+                            </Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
+            </Grid>
         </>
     )
 }

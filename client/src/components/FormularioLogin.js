@@ -5,13 +5,12 @@ import { login } from '../services/user-service'
 import { useNavigate } from 'react-router-dom'
 
 export const FormularioLogin = () => {
-
-
-
     const [user, setUser] = useState({
         email: '',
         password: '',
     })
+
+    const [error, setError] = useState('')
 
     const navigate = useNavigate()
 
@@ -24,14 +23,6 @@ export const FormularioLogin = () => {
     }
 
     const conectar = (e) => {
-        // login(user)
-        //     .then((response) => {
-        //         console.log(response)
-        //         navigate('/home')
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //     })
         e.preventDefault()
         try {
             login(user).then((response) => {
@@ -39,7 +30,9 @@ export const FormularioLogin = () => {
                 navigate('/home')
             })
         } catch (error) {
-            console.log(error)
+            const myError = error.response.data.msg
+            console.log(myError)
+            setError(myError.title.message || '')
         }
     }
 
@@ -64,6 +57,7 @@ export const FormularioLogin = () => {
                     <div>
                         <input type="password" name="password" onChange={handleChange} />
                     </div>
+                    {error && <p>{error}</p>}
                     <div>
                         <input type="submit" value="Ingresar" />
                     </div>

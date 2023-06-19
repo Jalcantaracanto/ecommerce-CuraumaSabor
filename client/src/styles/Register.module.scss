@@ -1,0 +1,49 @@
+.title {
+    display: flex;
+    justify-content: space-around;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-around;
+
+    label{
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    input[type='submit'] {
+        width: 80%;
+        height: 40px;
+        border: none;
+        border-radius: 5px;
+        background-color: #849484;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+
+    input[type='password'],
+    input[type='email'],
+    input[type='text'] {
+        width: 100%;
+        height: 20px;
+        border: 1px solid #948784;
+        border-radius: 5px;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+
+    input[type='password']:hover,
+    input[type='email']:hover,
+    input[type='text']:hover {
+        border: 1px solid #242323;
+        transition: 2ms;
+    }
+}
