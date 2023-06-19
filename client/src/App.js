@@ -1,9 +1,9 @@
 // import './App.scss'
+import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Home } from './views/Home'
 import { Register } from './views/Register'
 import { Productos } from './views/Productos'
-import React from 'react'
 import { CartProvider } from './context/CartProvider'
 import { NavbarWeb } from './components/NavbarWeb'
 import { CarroCompras } from './views/CarroCompras'
@@ -11,6 +11,7 @@ import { AgregarProducto } from './views/AgregarProducto'
 import { UserProvider } from './context/UserProvider'
 import { ListaProductos } from './views/ListaProductos'
 import { DetalleProducto } from './views/DetalleProducto'
+import { TestNav } from './components/TestNav'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
@@ -24,6 +25,7 @@ function App() {
         <>
             <UserProvider>
                 <CartProvider>
+                    <TestNav/>
                     <NavbarWeb />
                     <Container maxWidth="lg">
                         <Routes>

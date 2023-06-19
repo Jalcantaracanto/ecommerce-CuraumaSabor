@@ -54,13 +54,13 @@ export const ListadoProducto = ({ productos }) => {
                             <Card sx={{ maxWidth: 345 }}>
                                 <CardMedia sx={{ height: 450 }} image={`http://localhost:8080/${cortar}`} title={producto.descripcion} />
                                 <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
+                                    <Typography gutterBottom variant="h5" component="div" sx={{ textAlign: 'center' }}>
                                         {producto.nombre}
                                     </Typography>
-                                    <Typography variant="body2" color="text.secondary">
+                                    <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
                                         {producto.descripcion}
                                     </Typography>
-                                    <Typography variant="body1" color="text.primary">
+                                    <Typography variant="body1" color="text.primary" sx={{ textAlign: 'center' }}>
                                         {`$${producto.precio}`}
                                     </Typography>
                                 </CardContent>

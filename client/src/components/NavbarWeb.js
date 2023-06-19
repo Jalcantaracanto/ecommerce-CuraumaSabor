@@ -13,7 +13,7 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket'
 import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
-
+import { Typography } from '@mui/material'
 
 export const NavbarWeb = () => {
     const { limpiarCarro } = useContext(CartContext)
@@ -58,10 +58,20 @@ export const NavbarWeb = () => {
         navigate('/registro-usuario')
     }
 
+    const listaAdmin = () => {
+        navigate('/productos/lista-admin')
+    }
+
+    const crearProducto = () => {
+        navigate('/productos/nuevo-producto')
+    }
+
     return (
         <>
             <nav className={styles['navbar']}>
-                <h3>Curauma Sabor</h3>
+                <Typography variant="h6" ml={10} style={{ fontWeight: 'bold', fontSize: '1.5rem', color: 'white' }}>
+                    Curauma Sabor
+                </Typography>
                 <section>
                     <ButtonGroup variant="contained" spacing="0.5rem" aria-label="spacing button group">
                         <Button variant="contained" onClick={home}>

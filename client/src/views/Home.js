@@ -26,7 +26,7 @@ export const Home = () => {
     const { setUsuario } = useContext(UserContext)
     var items = [
         {
-            image: logo,
+            image: img3,
         },
         {
             description: '¡Los mejores Piscos que probaras en tu vida!',
