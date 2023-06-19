@@ -6,23 +6,14 @@ import { logout } from '../services/user-service'
 import { UserContext } from '../context/UserProvider'
 
 //Material UI
-//Botones
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import ButtonGroup from '@mui/material/ButtonGroup'
-import Container from '@mui/material/Container'
-
-//Grid
-import Grid from '@mui/material/Grid'
-
-//Typography
-import Typography from '@mui/material/Typography'
-
-//Iconos
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket'
 import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
+
 
 export const NavbarWeb = () => {
     const { limpiarCarro } = useContext(CartContext)
@@ -64,10 +55,6 @@ export const NavbarWeb = () => {
     }
 
     const conectar = () => {
-        navigate('/login')
-    }
-
-    const registrar = () => {
         navigate('/registro-usuario')
     }
 
@@ -118,10 +105,7 @@ export const NavbarWeb = () => {
                     ) : (
                         <>
                             <Button variant="text" startIcon={<LoginIcon />} onClick={conectar}>
-                                Entrar
-                            </Button>
-                            <Button variant="text" onClick={registrar}>
-                                Registrarme
+                                Entrar/Registro
                             </Button>
                         </>
                     )}
@@ -136,70 +120,6 @@ export const NavbarWeb = () => {
                     </ButtonGroup>
                 </section>
             </nav>
-            {/* <Grid container spacing={2}>
-                <Grid xs={2}>
-                    <Typography>Curauma Sabor</Typography>
-                </Grid>
-                <Grid xs={6}>
-                    <ButtonGroup variant="contained" spacing="0.5rem" aria-label="spacing button group">
-                        <Button variant="contained" onClick={home}>
-                            Home
-                        </Button>
-                        <Button variant="contained" onClick={productos}>
-                            Productos
-                        </Button>
-                        {usuario.admin === true ? (
-                            <>
-                                <Button id="basic-button" variant="contained" aria-controls={open ? 'basic-menu' : undefined} aria-haspopup="true" aria-expanded={open ? 'true' : undefined} onClick={handleClick}>
-                                    Administrador
-                                </Button>
-                                <Menu
-                                    id="basic-menu"
-                                    anchorEl={anchorEl}
-                                    open={open}
-                                    onClose={handleClose}
-                                    MenuListProps={{
-                                        'aria-labelledby': 'basic-button',
-                                    }}
-                                >
-                                    <Link to={'/productos/nuevo-producto'} underline="none">
-                                        <MenuItem onClick={handleClose}>Crear Producto</MenuItem>
-                                    </Link>
-                                    <Link to={'/productos/lista-admin'} underline="none">
-                                        <MenuItem onClick={handleClose}>Ver Productos</MenuItem>
-                                    </Link>
-                                </Menu>
-                            </>
-                        ) : null}
-                    </ButtonGroup>
-                </Grid>
-                <Grid xs={1}>
-                    {usuario.conectado === true ? (
-                        <Button variant="text" startIcon={<LogoutIcon />} onClick={desconectar}>
-                            Salir
-                        </Button>
-                    ) : (
-                        <>
-                            <Button variant="text" startIcon={<LoginIcon />} onClick={conectar}>
-                                Entrar
-                            </Button>
-                            <Button variant="text" onClick={registrar}>
-                                Registrarme
-                            </Button>
-                        </>
-                    )}
-                </Grid>
-                <Grid xs={2}>
-                    <ButtonGroup variant="contained" spacing="0.5rem" aria-label="spacing button group">
-                        <Button variant="contained" onClick={limpiarCarro}>
-                            Vaciar Carro
-                        </Button>
-                        <Button variant="contained" startIcon={<ShoppingBasketIcon />} onClick={carroCompras}>
-                            Carro
-                        </Button>
-                    </ButtonGroup>
-                </Grid>
-            </Grid> */}
         </>
     )
 }

@@ -63,14 +63,14 @@ export const FormularioProducto = () => {
                     <section>
                         <textarea type="text" name="descripcion" placeholder="Ingresa Descripción" onChange={handleInputChange} />
                     </section>
-                    <div>
+                    {/* <div>
                         <label htmlFor="">Categoria</label>
                         <select name="categoria" onChange={handleInputChange}>
                             <option value="Pisco">Pisco</option>
                             <option value="Comida">Comida</option>
                             <option value="pack">Pack</option>
                         </select>
-                    </div>
+                    </div> */}
                     <div controlId="formFile" className="mb-3">
                         <label htmlFor="">Imagen de Producto</label>
                         <input type="file" name="imagen" onChange={imagencita} />

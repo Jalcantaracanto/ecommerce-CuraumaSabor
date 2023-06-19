@@ -2,7 +2,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { Home } from './views/Home'
 import { Register } from './views/Register'
-import { Login } from './views/Login'
 import { Productos } from './views/Productos'
 import React from 'react'
 import { CartProvider } from './context/CartProvider'
@@ -28,9 +27,8 @@ function App() {
                     <NavbarWeb />
                     <Container maxWidth="lg">
                         <Routes>
-                            <Route path="/" element={<Productos />} />
+                            <Route path="/" element={<Home />} />
                             <Route path="/home" element={<Home />} />
-                            <Route path="/login" element={<Login />} />
                             <Route path="/registro-usuario" element={<Register />} />
                             <Route path="/productos/nuevo-producto" element={<AgregarProducto />} />
                             <Route path="/productos/lista-productos" element={<Productos />} />

@@ -19,6 +19,8 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Unstable_Grid2'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { IconButton, InputLabel, TextField } from '@mui/material'
 
 //sweet alert
 import Swal from 'sweetalert2'
@@ -26,7 +28,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 export const ListadoCarro = () => {
     const { usuario } = useContext(UserContext)
-    const { carro, limpiarCarro } = useContext(CartContext)
+    const { carro, limpiarCarro, eliminarProducto, modificarCantidad } = useContext(CartContext)
     const navigate = useNavigate()
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -51,8 +53,6 @@ export const ListadoCarro = () => {
         },
     }))
 
-    // console.log(usuario)
-
     //Calcular Total del Carro
     const calcularTotal = () => {
         let total = 0
@@ -65,44 +65,95 @@ export const ListadoCarro = () => {
         return totalFormateado
     }
 
+    console.log(carro)
+
     const comprar = () => {
-        try {
-            const { nombre, apellido, correo } = usuario
-            const carroCopia = [...carro]
-            const total = calcularTotal()
-            const listaProductos = carroCopia.map((item, index) => `${index + 1}. ${item.nombre} - Precio: $${item.precio * item.cantidad}`).join('\n')
+        if (usuario.conectado === true) {
+            if (carro.length > 0) {
+                try {
+                    const { nombre, apellido, correo } = usuario
+                    const carroCopia = [...carro]
+                    const total = calcularTotal()
+                    const listaProductos = carroCopia.map((item, index) => `${index + 1}. ${item.nombre} - Precio: $${item.precio * item.cantidad}`).join('\n')
+                    const listaProductos2 = carroCopia.map((item, index) => `${index + 1}. ${item.nombre} - Cantidad: ${item.cantidad}`).join('\n')
 
-            let templateParams = {
-                nombre: nombre,
-                apellido: apellido,
-                detalle: listaProductos,
-                correo: correo,
-                total: total,
-            }
+                    let templateParams = {
+                        nombre: nombre,
+                        apellido: apellido,
+                        detalle: listaProductos,
+                        correo: correo,
+                        total: total,
+                    }
 
-            emailjs.send('service_7nwli6o', 'template_qvpxwhn', templateParams, 'KLSEKZcO95MBJAoTm').then(
-                function (response) {
-                    console.log('SUCCESS!', response.status, response.text)
-                },
-                function (error) {
-                    console.log('FAILED...', error)
+                    let templateParams2 = {
+                        nombre: nombre,
+                        apellido: apellido,
+                        productos: listaProductos2,
+                        calle: usuario.direccion.calle,
+                        numero: usuario.direccion.numero,
+                        ciudad: usuario.direccion.ciudad,
+                        telefono: usuario.direccion.telefono,
+                    }
+
+                    emailjs.send('service_7nwli6o', 'template_qvpxwhn', templateParams, 'KLSEKZcO95MBJAoTm').then(
+                        function (response) {
+                            console.log('SUCCESS!', response.status, response.text)
+                            MySwal.fire({
+                                title: 'Compra realizada con Exito',
+                                icon: 'success',
+                                text: 'Le llegará un correo con el detalle de su compra, Muchas gracias por su compra.',
+                                confirmButtonText: 'Aceptar',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    navigate('/home')
+                                    limpiarCarro()
+                                }
+                            })
+                        },
+                        function (error) {
+                            console.log('FAILED...', error)
+                        }
+                    )
+                    emailjs.send('service_7nwli6o', 'template_bcckjgv', templateParams2, 'KLSEKZcO95MBJAoTm').then(
+                        function (response) {
+                            console.log('SUCCESS!', response.status, response.text)
+                        },
+                        function (error) {
+                            console.log('FAILED...', error)
+                        }
+                    )
+                } catch (error) {
+                    console.log(error)
+                    alert('Error al realizar la compra')
                 }
-            )
-
+            } else {
+                MySwal.fire({
+                    title: 'Necesita tener productos en el carro para comprar',
+                    icon: 'error',
+                    showDenyButton: true,
+                    denyButtonText: `Salir`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        navigate('../productos/lista-productos')
+                    } else if (result.isDenied) {
+                    }
+                })
+            }
+        } else {
             MySwal.fire({
-                title: 'Compra realizada con Exito',
-                icon: 'success',
-                text: 'Le llegará un correo con el detalle de su compra, Muchas gracias por su compra.',
-                confirmButtonText: 'Aceptar',
+                title: 'Necesita estar conectado para Comprar',
+                icon: 'error',
+                showDenyButton: true,
+                confirmButtonText: 'Conectarme',
+                denyButtonText: `Salir`,
             }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
-                    navigate('/home')
-                    limpiarCarro()
+                    navigate('/registro-usuario')
+                } else if (result.isDenied) {
                 }
             })
-        } catch (error) {
-            console.log(error)
-            alert('Error al realizar la compra')
         }
     }
 
@@ -118,6 +169,7 @@ export const ListadoCarro = () => {
                                     <StyledTableCell align="right">Precio</StyledTableCell>
                                     <StyledTableCell align="right">Cantidad</StyledTableCell>
                                     <StyledTableCell align="right">Total</StyledTableCell>
+                                    <StyledTableCell align="right">Eliminar</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -129,6 +181,11 @@ export const ListadoCarro = () => {
                                         <TableCell align="right">{`$${item.precio}`}</TableCell>
                                         <TableCell align="right">{item.cantidad}</TableCell>
                                         <TableCell align="right">{`$${parseInt(item.precio * item.cantidad).toLocaleString()}`}</TableCell>
+                                        <TableCell align="right">
+                                            <IconButton aria-label="delete" onClick={() => eliminarProducto(item.id)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>

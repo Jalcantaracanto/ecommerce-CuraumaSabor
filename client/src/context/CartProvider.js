@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
 export const CartContext = React.createContext([])
-
-// const initialState = []
-// const reducer = (state, action) => {
-//     switch (action.type) {
-//         case 'ADD_TO_CART':
-
-//     }
-//     return state
-// }
 
 export const CartProvider = ({ children }) => {
     const [carro, setCarro] = useState([])
@@ -31,12 +21,6 @@ export const CartProvider = ({ children }) => {
     const limpiarCarro = () => {
         setCarro([])
     }
-
-    // //Verifica si un elemento con el id especificado se encuentra en el arreglo carro
-    // const estaEnCarro = (id) => (carro.find((item) => item.id === id) ? true : false)
-
-    // //Quita un producto del carro (que aun no está hecho)
-    // const quitarProducto = (id) => setCarro(carro.filter((item) => item.id !== id))
 
     const agregarProducto = (productoNuevo) => {
         let nuevoCarro = []
@@ -64,6 +48,24 @@ export const CartProvider = ({ children }) => {
         }
     }
 
+    const eliminarProducto = (id) => {
+        let nuevoCarro = []
+        nuevoCarro = carro.filter((item) => item.id !== id)
+        setCarro([...nuevoCarro])
+    }
+
+    //Sin uso actualmente
+    const modificarCantidad = (id, cantidad) => {
+        let nuevoCarro = []
+        nuevoCarro = carro.map((item) => {
+            if (item.id === id) {
+                item.cantidad = cantidad
+            }
+            return item
+        })
+        setCarro([...nuevoCarro])
+    }
+
     return (
         <CartContext.Provider
             value={{
@@ -71,6 +73,8 @@ export const CartProvider = ({ children }) => {
                 limpiarCarro,
                 agregarProducto,
                 setCarro,
+                eliminarProducto,
+                modificarCantidad,
             }}
         >
             {children}

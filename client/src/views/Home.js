@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react'
 import Carousel from 'react-material-ui-carousel'
 import { UserContext } from '../context/UserProvider'
