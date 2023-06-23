@@ -18,10 +18,6 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import { List, ListItem } from '@mui/material'
-import e from 'express'
-
-const pages = ['Inicio', 'Productos', 'Administrador']
-const admin = ['Nuevo Producto', 'Lista de Productos']
 
 export const TestNav = () => {
     const { limpiarCarro } = useContext(CartContext)
@@ -42,6 +38,14 @@ export const TestNav = () => {
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget)
+    }
+
+    const handleOpenCartMenu = (event) => {
+        setAnchorElCart(event.currentTarget)
+    }
+
+    const handleCloseCartMenu = () => {
+        setAnchorElCart(null)
     }
 
     const handleCloseAdminMenu = () => {
@@ -100,7 +104,7 @@ export const TestNav = () => {
     }
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" style={{ backgroundColor: '#f8cd96', marginBottom: 25 }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
@@ -184,15 +188,11 @@ export const TestNav = () => {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {usuario.admin === true ? (
                             <>
-                                <Button>
-                                    <Typography onClick={home} sx={{ my: 2, color: 'white', display: 'block' }}>
-                                        Inicio
-                                    </Typography>
+                                <Button onClick={home}>
+                                    <Typography sx={{ my: 2, color: 'white', display: 'block' }}>Inicio</Typography>
                                 </Button>
-                                <Button>
-                                    <Typography onClick={productos} sx={{ my: 2, color: 'white', display: 'block' }}>
-                                        Productos
-                                    </Typography>
+                                <Button onClick={productos}>
+                                    <Typography sx={{ my: 2, color: 'white', display: 'block' }}>Productos</Typography>
                                 </Button>
                                 <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                                     {usuario.admin === true ? (
@@ -255,10 +255,9 @@ export const TestNav = () => {
                             </>
                         )}
                     </Box>
-
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            <IconButton onClick={handleOpenCartMenu} sx={{ p: 0, marginRight: 5 }}>
                                 <Avatar alt="Remy Sharp" src="https://thumbs.dreamstime.com/b/shopping-cart-icon-flat-vector-round-button-clean-black-white-design-concept-isolated-illustration-minimal-simple-circle-frame-167076849.jpg" />
                             </IconButton>
                         </Tooltip>
@@ -276,37 +275,7 @@ export const TestNav = () => {
                                 horizontal: 'right',
                             }}
                             open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            <List>
-                                <ListItem button>
-                                    <Typography sx={{ p: 0 }}>Carro de Compras</Typography>
-                                </ListItem>
-                                <ListItem button>
-                                    <Typography sx={{ p: 0 }}>Vaciar Carro</Typography>
-                                </ListItem>
-                            </List>
-                        </Menu>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="https://png.pngtree.com/png-vector/20220628/ourlarge/pngtree-user-profile-avatar-vector-admin-png-image_5289693.png" />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
+                            onClose={handleCloseUserMenu} // Se actualizó el nombre de la función
                         >
                             <List>
                                 {usuario.conectado === true ? (
@@ -329,9 +298,52 @@ export const TestNav = () => {
                                             handleCloseUserMenu()
                                         }}
                                     >
-                                        <Typography sx={{ p: 0 }}>Conectar</Typography>
+                                        <Typography sx={{ p: 0 }}>Conectar / Registrar</Typography>
                                     </ListItem>
                                 )}
+                            </List>
+                        </Menu>
+                        <Tooltip title="Open settings">
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                <Avatar alt="Remy Sharp" src="https://png.pngtree.com/png-vector/20220628/ourlarge/pngtree-user-profile-avatar-vector-admin-png-image_5289693.png" />
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElCart}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElCart)}
+                            onClose={handleCloseCartMenu} // Se actualizó el nombre de la función
+                        >
+                            <List>
+                                <ListItem
+                                    button
+                                    onClick={() => {
+                                        carroCompras()
+                                        handleCloseCartMenu()
+                                    }}
+                                >
+                                    <Typography sx={{ p: 0 }}>Carro de Compras</Typography>
+                                </ListItem>
+
+                                <ListItem
+                                    button
+                                    onClick={() => {
+                                        limpiarCarro()
+                                        handleCloseCartMenu()
+                                    }}
+                                >
+                                    <Typography sx={{ p: 0 }}>Vaciar Carro</Typography>
+                                </ListItem>
                             </List>
                         </Menu>
                     </Box>

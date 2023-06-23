@@ -13,7 +13,6 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-
 app.use('/', express.static(path.join(__dirname, 'server/uploads')))
 
 // Importar rutas

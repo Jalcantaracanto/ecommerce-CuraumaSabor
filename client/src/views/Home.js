@@ -13,7 +13,6 @@ import img4 from '../assets/home/04.jpeg'
 import img5 from '../assets/home/05.jpeg'
 import img6 from '../assets/home/06.jpeg'
 import img7 from '../assets/home/07.jpeg'
-import logo from '../assets/logo.jpeg'
 
 //Material UI
 import Box from '@mui/material/Box'

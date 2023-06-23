@@ -26,6 +26,20 @@ module.exports = (app) => {
     app.post('/api/producto', authenticate, upload.single('imagen'), crearProducto)
     app.get('/api/productos', listarProductos)
     app.get('/api/producto/:id', authenticate, listarProducto)
-    app.put('/api/producto/:id',  actualizarProducto)
+    app.put('/api/producto/:id', actualizarProducto)
     app.delete('/api/producto/:id', authenticate, eliminarProducto)
+    // app.get('/api/producto/lastImageNumber', (req, res) => {
+    //     const uploadsDir = path.join(__dirname, 'uploads')
+    //     const files = fs.readdirSync(uploadsDir)
+    //     let lastImageNumber = 0
+
+    //     files.forEach((file) => {
+    //         const imageNumber = parseInt(file.split('.')[0])
+    //         if (imageNumber > lastImageNumber) {
+    //             lastImageNumber = imageNumber
+    //         }
+    //     })
+
+    //     res.json({ lastImageNumber })
+    // })
 }

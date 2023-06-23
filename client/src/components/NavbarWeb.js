@@ -58,13 +58,6 @@ export const NavbarWeb = () => {
         navigate('/registro-usuario')
     }
 
-    const listaAdmin = () => {
-        navigate('/productos/lista-admin')
-    }
-
-    const crearProducto = () => {
-        navigate('/productos/nuevo-producto')
-    }
 
     return (
         <>

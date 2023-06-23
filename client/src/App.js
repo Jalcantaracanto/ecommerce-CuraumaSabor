@@ -5,7 +5,7 @@ import { Home } from './views/Home'
 import { Register } from './views/Register'
 import { Productos } from './views/Productos'
 import { CartProvider } from './context/CartProvider'
-import { NavbarWeb } from './components/NavbarWeb'
+// import { NavbarWeb } from './components/NavbarWeb'
 import { CarroCompras } from './views/CarroCompras'
 import { AgregarProducto } from './views/AgregarProducto'
 import { UserProvider } from './context/UserProvider'
@@ -26,7 +26,7 @@ function App() {
             <UserProvider>
                 <CartProvider>
                     <TestNav/>
-                    <NavbarWeb />
+                    {/* <NavbarWeb /> */}
                     <Container maxWidth="lg">
                         <Routes>
                             <Route path="/" element={<Home />} />

@@ -3,13 +3,14 @@ import styles from '../styles/AgregarProducto.module.scss'
 import { agregarProducto } from '../services/producto-service'
 
 export const FormularioProducto = () => {
-    const [producto, setProducto] = useState({
+    const initialProductoState = {
         nombre: '',
         precio: '',
         descripcion: '',
-        categoria: '',
         imagen: null,
-    })
+    }
+
+    const [producto, setProducto] = useState(initialProductoState)
 
     const handleInputChange = (e) => {
         setProducto({
@@ -24,12 +25,12 @@ export const FormularioProducto = () => {
         data.append('nombre', producto.nombre)
         data.append('precio', producto.precio)
         data.append('descripcion', producto.descripcion)
-        data.append('categoria', producto.categoria)
         data.append('imagen', producto.imagen)
 
         agregarProducto(data)
             .then((res) => {
                 console.log(res)
+                setProducto(initialProductoState)
             })
             .catch((err) => {
                 console.log(err)

@@ -28,7 +28,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 export const ListadoCarro = () => {
     const { usuario } = useContext(UserContext)
-    const { carro, limpiarCarro, eliminarProducto, modificarCantidad } = useContext(CartContext)
+    const { carro, limpiarCarro, eliminarProducto } = useContext(CartContext)
     const navigate = useNavigate()
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
